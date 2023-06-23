@@ -44,6 +44,24 @@ app.get("/pokemon", (req, res) => {
   res.send(pokemon);
 });
 
+app.get("/pokemon/search", (req, res) => {
+  let queryName = req.query.name;
+
+  let foundPokemon = null;
+
+  pokemon.forEach((item) => {
+    if (item.name.toLowerCase() === queryName.toLowerCase()) {
+      foundPokemon = item;
+    }
+  });
+
+  if (!foundPokemon) {
+    res.send([]);
+  } else {
+    res.send([foundPokemon]);
+  }
+});
+
 app.get("/pokemon/:indexOfArray", (req, res) => {
   let indexOfArray = req.params.indexOfArray;
 
@@ -52,15 +70,6 @@ app.get("/pokemon/:indexOfArray", (req, res) => {
   } else {
     res.send("Sorry, no pokemon found at " + indexOfArray);
   }
-
-  //   app.get("/pokemon/:search", (req, res) => {
-  //     console.log("This is req.params", req.params);
-  //     console.log("This is req.query", req.query);
-
-  //     const name = req.query.name;
-
-  // res.send("name is " + name)
-  //   });
 });
 
 module.exports = app;

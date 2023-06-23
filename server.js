@@ -3,6 +3,7 @@
 
 // DEPENDENCIES
 const app = require("./app.js");
+const dotenv = require("./app");
 
 // CONFIGURATION
 require("dotenv").config();
