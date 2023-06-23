@@ -21,11 +21,13 @@ app.get(`/pokemon/:indexOfArray`, (req, res) => {
   }
 });
 
+app.get(`/pokemon/search`);
+
 // 99 little bugs in the code
 app.get(`/bugs`, (req, res) => {
-  res.send(`99 little bugs in the code, 
+  res.send(`<h1>99 little bugs in the code</h1>, 
     99 little bugs, 
-    <a href="localhost:8888/bugs/101>"Pull one down, 
+    <a href="/bugs/101>"Pull one down, 
     Patch it around</a>
     101 bugs in the code`);
 });
@@ -34,13 +36,12 @@ app.get(`/bugs/:numberOfBugs`, (req, res) => {
   if (req.params.numberOfBugs >= 200) {
     res.send(`<a href="localhost:8888/bugs">Too many bugs!! Start over!</a>`);
   } else {
-    res.send(`${req.params.numberOfBugs} little bugs in the code, 
+    res.send(`<p>${req.params.numberOfBugs} little bugs in the code, 
     ${req.params.numberOfBugs} little bugs, 
-    <a href="localhost:8888/bugs/${
-      Number(req.params.numberOfBugs) + Number(2)
-    }">Pull one down</a>, 
-    Patch it around
-    ${Number(req.params.numberOfBugs) + Number(2)} bugs in the code`);
+    <a href="/bugs/${
+      Number(req.params.numberOfBugs) + 2
+    }">Pull one down, patch it around</a>
+    ${Number(req.params.numberOfBugs) + 2} little bugs in the code</p>`);
   }
 });
 
