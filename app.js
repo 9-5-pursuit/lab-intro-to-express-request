@@ -9,7 +9,7 @@ app.get("/:verb/:adjective/:noun", (req, res) => {
 });
 
 app.get("/bugs", (req, res) => {
-  res.send();
+  res.send("<h1>99 little bugs in the code</h1><a href='./bugs/101'>pull on down, patchit around</a>");
 });
 
 app.get("/bugs/:numberOfBugs", (req, res) => {
