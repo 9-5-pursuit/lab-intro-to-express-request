@@ -17,7 +17,31 @@ app.get("/", (request, response) => {
 });
 
 app.get("/bugs", (request, response) => {
-  response.send("<h1>99 little bugs in the code<h1>");
+    let numberOfBugs = 99;
+    let linkText = "Pull one down, patch it around";
+    let linkUrl = "/bugs/101"
+
+    if (numberOfBugs >= 200) {
+        linkText = "Too many bugs!! Start over!";
+        linkUrl = "/bugs"
+    }
+  response.send(`<h1>${numberOfBugs} little bugs in the code<h1>` + `<a href="${linkUrl}">${linkText}</a>`);
+});
+
+app.get("/bugs/:numberOfBugs", (request, response) => {
+  let numberOfBugs = parseInt(request.params.numberOfBugs);
+  let linkText = "Pull one down, patch it around";
+  let linkUrl = `/bugs/${numberOfBugs + 2}`;
+
+  if (numberOfBugs >= 200) {
+    linkText = "Too many bugs!! Start over!";
+    linkUrl = "/bugs";
+  }
+
+  response.send(
+    `<h1>${numberOfBugs} little bugs in the code</h1>` +
+      `<a href="${linkUrl}">${linkText}</a>`
+  );
 });
 
 
