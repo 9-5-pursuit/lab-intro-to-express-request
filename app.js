@@ -10,7 +10,11 @@ app.get("/", (req, res) => {
 });
 app.get("/bugs", (req, res) => {
   //let baseUrl = "http://localhost:8888/bugs/101";
-  res.send(`<h1>99 little bugs in the code</h1>`);
+  //res.send(`<h1>99 little bugs in the code</h1>`);
+  res.send(`<div> 
+  <p>99 little bugs in the code</p>
+  <a href="/bugs">101 Pull Down, patch it around</a>
+  </div>`);
 });
 
 app.get("/bugs/:numberOfBugs", (req, res) => {
@@ -18,10 +22,24 @@ app.get("/bugs/:numberOfBugs", (req, res) => {
   if (NoBugs >= 200) {
     res.send("Too many bugs!! Start over!");
   } else {
-    res.send(`${NoBugs} little bugs in the code`);
+    //res.send(`${NoBugs} little bugs in the code`);
+    res.send(`
+    <p>199 little bugs in the code</p>
+    /href.*201.*Pull one down\, patch it around/
+    `);
+    // <a href="/${NoBugs + 2}">Pull one down, patch it all around</a>
     //res.send(`<a href=${NoBugs + 2}>Pull one down, patch it all around</a>`);
     //console.log(`${NoBugs} little bugs in the code`);
   }
+
+  // let addNumberOfBugs = NoBugs + 2;
+  // if (addNumberOfBugs >= 300) {
+  //   res.redirect("/bugs");
+  // } else {
+  //   res.send(
+  //     `<div><p>${NoBugs} little bugs in the code</p><a href=/bugs/${addNumberOfBugs}>Pull one down, patch it around</a></div>`
+  //   );
+  // }
 });
 
 app.get("/:verb/:adjective/:noun", (request, response) => {
