@@ -4,10 +4,14 @@ const app = express();
 
 app.use(express.json());
 
+app.get("/", (req, res) => {
+    res.send("Welcome 99 Pokemon")
+})
+
 app.get("/:verb/:adjective/:noun", (req, res) => {
     let params = req.params
 
-    res.send(`Congratulations on starting a new project called ${params.verb}-${params.adjective}-${params.noun}`)
+    res.send(`Congratulations on starting a new project called ${params.verb}-${params.adjective}-${params.noun}!`)
 })
 
 app.get("/bugs", (req, res) => {
@@ -36,7 +40,7 @@ app.get("/bugs/:numberOfBugs", (req, res) => {
         let bugsHTMLString2 = `
         <p>${numberBugs} little bugs in the code</p>
         <p>${numberBugs} little bugs</p>
-        <a href="http://localhost:8888/bugs">Start over?</a>
+        <a href="http://localhost:8888/bugs">Too many bugs!! Start over!</a>
         <p>${numberBugs + 2} bugs in the code</p>
         `
 
@@ -59,11 +63,13 @@ app.get("/pokemon/search", (req, res) => {
     if (req.query.name) {
         pokemon.map((item) => {
             if (item.name.toLowerCase() === req.query.name.toLowerCase()) {
-                res.send(item) 
+                res.send([item]) 
+            } else {
+                res.send([])
             }
         })
     } else {
-        res.send(pokemon)
+        res.send([])
     }
 })
 
@@ -71,7 +77,7 @@ app.get("/pokemon/:indexOfArray", (req, res) => {
     if (pokemon[req.params.indexOfArray]) {
         res.send(pokemon[req.params.indexOfArray])
     } else {
-        res.status(404).send(`sorry no pokemon found at /pokemon[${req.params.indexOfArray}]`)
+        res.status(404).send(`Sorry, no pokemon found at ${req.params.indexOfArray}`)
     }
 })
 
