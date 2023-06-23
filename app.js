@@ -50,6 +50,19 @@ app.get("/pokemon", (request, response) => {
     response.send(pokemon)
 })
 
+app.get("/pokemon/search", (request, response) => {
+  let search = request.query.name.toLowerCase();
+
+  //Filter returns a new array
+  let foundPokemon = pokemon.filter((p) => p.name.toLowerCase() === search);
+
+  if (foundPokemon.length > 0) {
+    response.json(foundPokemon);
+  } else {
+    response.json([]);
+  }
+});
+
 app.get("/pokemon/:index", (request, response) => {
     let index = parseInt(request.params.index);
 
@@ -60,8 +73,5 @@ app.get("/pokemon/:index", (request, response) => {
     (`Sorry, no pokemon found at ${index}`);
   }
 });
-
-
-
 
 module.exports = app;
