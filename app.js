@@ -10,7 +10,7 @@ app.use(express.json())
 
 
 app.get('/', (req,res)=> {
-    res.send('Hi :)')
+    res.send('Welcome 99 Pokemon')
 })
 app.get('/:verb/:adjective/:noun', (req,res)=> {
     let verb = req.params.verb
@@ -36,7 +36,7 @@ app.get('/pokemon', (req,res) => {
 app.get('/pokemon/search', (req, res) => {
     const name = req.query.name
     const pokemonObj = pokemon.find(pokemon => pokemon.name.toLowerCase() === name.toLowerCase())
-    res.send(pokemonObj)
+    res.send([pokemonObj])
 })
 app.get('/pokemon/:indexOfArray', (req,res) => {
     if(!pokemon[req.params.indexOfArray]){
