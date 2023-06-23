@@ -12,4 +12,8 @@ app.get("/:verb/:adjective/:noun", (request, response) => {
   );
 });
 
+app.get("/", (request, response) => {
+    response.send("Welcome 99 Pokemon");
+})
+
 module.exports = app;
