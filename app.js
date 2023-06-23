@@ -47,9 +47,13 @@ app.get('/pokemon/:indexOfArray', (req,res) => {
 app.get('/pokemon-pretty/', (req, res) => {
     const listOfPokemons = pokemon.map(obj => {
         const pokemonIndex = pokemon.findIndex(x => x.name === obj.name)
-        return `<a href="/pokemon-pretty/:${pokemonIndex}">${obj.name}</a><br>`
+        return `<a href="/pokemon-pretty/${pokemonIndex}">${obj.name}</a><br>`
     })
     res.send(listOfPokemons.join(' '))
+})
+app.get('/pokemon-pretty/:indexOfArray', (req, res) => {
+    // TODO: Add correct format
+    res.send(pokemon[req.params.indexOfArray])
 })
 
 module.exports = app;
