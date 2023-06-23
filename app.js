@@ -34,13 +34,22 @@ app.get('/pokemon', (req,res) => {
     res.send(pokemon)
 })
 app.get('/pokemon/search', (req, res) => {
-    res.send('search!')
+    const name = req.query.name
+    const pokemonObj = pokemon.find(pokemon => pokemon.name.toLowerCase() === name.toLowerCase())
+    res.send(pokemonObj)
 })
 app.get('/pokemon/:indexOfArray', (req,res) => {
     if(!pokemon[req.params.indexOfArray]){
         res.send(`sorry, no pokemon found at /pokemon/${req.params.indexOfArray}`)
     }
     res.send(pokemon[req.params.indexOfArray])
+})
+app.get('/pokemon-pretty/', (req, res) => {
+    const listOfPokemons = pokemon.map(obj => {
+        const pokemonIndex = pokemon.findIndex(x => x.name === obj.name)
+        return `<a href="/pokemon-pretty/:${pokemonIndex}">${obj.name}</a><br>`
+    })
+    res.send(listOfPokemons.join(' '))
 })
 
 module.exports = app;
