@@ -16,19 +16,22 @@ app.get("/:verb/:adjective/:noun", (request, response) => {
   );
 });
 
-app.get("/bugs", (request, response) => {
-  response.send("99 little bugs in the code");
+app.get("/bugs", (req, res) => {
+  res.send("<h1>99 little bugs in the code</h1>");
 });
 
 app.get("/bugs/:numberOfBugs", (request, response) => {
+  const numberOfBugs = Number(request.params.numberOfBugs);
 
-    if (request.params.numberOfBugs > 199) {
-        
-        response.send("Too many bugs!! Start over!"
-        
-        );
-    } 
-   
+  if (numberOfBugs >= 200) {
+    // res.redirect("/bugs");
+    response.send("Too many bugs!! Start over!");
+  } else {
+    response.send(`
+        <p>199 little bugs in the code</p>
+        <a href="/${numberOfBugs + 2}">Pull one down, patch it around</a> 
+  `);
+  }
 });
 
 app.get("/pokemon", (request, response) => {
@@ -57,6 +60,18 @@ app.get("/pokemon/:indexOfArray", (request, response) => {
     response.send(pokemon[indexOfArray]);
   } else {
     response.send(`Sorry, no pokemon found at ${indexOfArray}`);
+  }
+});
+
+app.get("/pokemon/:indexOfArray", (req, res) => {
+  let indexOfArray = Number(req.params.indexOfArray);
+
+  let selectedPokemon = pokemon[indexOfArray];
+
+  if (!selectedPokemon) {
+    res.send(`Sorry, no pokemon found at ${indexOfArray}`);
+  } else {
+    res.send(selectedPokemon);
   }
 });
 
