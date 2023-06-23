@@ -13,7 +13,13 @@ app.get(`/pokemon`, (req, res) => {
   res.json(pokemon);
 });
 
-app.get(`/pokemon/:indexOfArray`, (req, res) => {});
+app.get(`/pokemon/:indexOfArray`, (req, res) => {
+  if (indexOfArray === -1) {
+    `sorry, no pokemon found at /pokemon[${indexOfArray}] - where [${indexOfArray}] is the value from the URL that the user has entered`;
+  } else {
+    res.json(pokemon.indexOf((poke) => poke === indexOfArray));
+  }
+});
 
 // 99 little bugs in the code
 app.get(`/bugs`, (req, res) => {
