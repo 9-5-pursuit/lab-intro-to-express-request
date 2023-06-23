@@ -33,6 +33,9 @@ app.get('/bugs/:bugsleft', (req,res) => {
 app.get('/pokemon', (req,res) => {
     res.send(pokemon)
 })
+app.get('/pokemon/search', (req, res) => {
+    res.send('search!')
+})
 app.get('/pokemon/:indexOfArray', (req,res) => {
     if(!pokemon[req.params.indexOfArray]){
         res.send(`sorry, no pokemon found at /pokemon/${req.params.indexOfArray}`)
