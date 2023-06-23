@@ -53,7 +53,8 @@ app.get('/pokemon-pretty/', (req, res) => {
 })
 app.get('/pokemon-pretty/:indexOfArray', (req, res) => {
     // TODO: Add correct format
-    res.send(`<p>${pokemon[req.params.indexOfArray].name}</p>`)
+    const pokemonObj = pokemon[req.params.indexOfArray]
+    res.send(`<h1>${pokemonObj.name}</h1><br><img src="${pokemonObj.img}"/><br><h2>Type: ${pokemonObj.type}</h2>`)
 })
 
 module.exports = app;
