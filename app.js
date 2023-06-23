@@ -14,6 +14,11 @@ app.get("/:verb/:adjective/:noun", (request, response) => {
 
 app.get("/", (request, response) => {
     response.send("Welcome 99 Pokemon");
-})
+});
+
+app.get("/bugs", (request, response) => {
+  response.send("<h1>99 little bugs in the code<h1>");
+});
+
 
 module.exports = app;
