@@ -53,7 +53,7 @@ app.get('/pokemon-pretty/', (req, res) => {
 })
 app.get('/pokemon-pretty/:indexOfArray', (req, res) => {
     // TODO: Add correct format
-    res.send(pokemon[req.params.indexOfArray])
+    res.send(`<p>${pokemon[req.params.indexOfArray].name}</p>`)
 })
 
 module.exports = app;
