@@ -39,14 +39,10 @@ app.get("/pokemon", (req, res) => {
 
 app.get("/pokemon/search", (req, res) => {
   const { name } = req.query;
-  let matchedPoke = pokemon.find((poke) => {
+  let matchedPoke = pokemon.filter((poke) => {
     return poke.name.toLowerCase() == name.toLowerCase();
   });
-  if (!matchedPoke) {
-    res.json([]);
-  } else {
-    res.json([matchedPoke]);
-  }
+  res.json(matchedPoke);
 });
 
 app.get("/pokemon/:index", (req, res) => {
