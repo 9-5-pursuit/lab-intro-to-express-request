@@ -2,6 +2,8 @@ const express = require("express");
 
 const app = express();
 
+const pokemon = require("./models/pokemon.json");
+
 app.get("/", (req, res) => {
   res.send("Welcome 99 Pokemon");
 });
@@ -11,32 +13,57 @@ app.get("/bugs", (req, res) => {
 });
 
 app.get("/bugs/:numberOfBugs", (req, res) => {
-  let numberOfBugs = req.params.numberOfBugs;
+  const numberOfBugs = Number(req.params.numberOfBugs);
+
   if (numberOfBugs >= 200) {
-    res.json("Too many bugs!! Start over!");
+    res.send("Too many bugs!! Start over!");
   } else {
-    res.json(`${numberOfBugs} little bugs in the code`);
+    const newNumberOfBugs = numberOfBugs + 2;
+    res.send(`${numberOfBugs} little bugs in the code<br>
+        <a href="/bugs/${newNumberOfBugs}">Pull one down, patch it around</a>`);
   }
 });
 
 app.get("/pokemon", (req, res) => {
-  res.json("pokemon");
+  res.json(pokemon);
 });
 
 app.get("/pokemon/search", (req, res) => {
-  res.json("[]");
+  let queryName = req.query.name;
+
+  let foundPokemon = null;
+
+  pokemon.forEach((item) => {
+    if (item.name.toLowerCase() === queryName.toLowerCase()) {
+      foundPokemon = item;
+    }
+  });
+
+  if (!foundPokemon) {
+    res.send("[]");
+  } else {
+    res.json([foundPokemon]);
+  }
 });
 
-app.get("/pokemon/search/:name", (req, res) => {
-  res.json("[]");
+app.get("/pokemon/:index", (req, res) => {
+  const index = req.params.index;
+
+  if (!pokemon[index]) {
+    res.send(`Sorry, no pokemon found at ${index}`);
+  } else {
+    res.json(pokemon[index]);
+  }
 });
 
-// app.get("/:verb/:adjective/:noun", (req, res) => {
-//   res.json({
-//     verb: request.params.verb,
-//     adkective: request.params.adjective,
-//     noun: request.params.noun,
-//   });
-// });
+app.get("/:verb/:adjective/:noun", (req, res) => {
+  let verb = req.params.verb;
+  let adjective = req.params.adjective;
+  let noun = req.params.noun;
+
+  res.send(
+    `Congratulations on starting a new project called ${verb}-${adjective}-${noun}!`
+  );
+});
 
 module.exports = app;
