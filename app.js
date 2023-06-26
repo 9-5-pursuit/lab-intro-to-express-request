@@ -26,7 +26,7 @@ app.get('/bugs', (req,res) => {
 app.get('/bugs/:bugsleft', (req,res) => {
     const bugsLeft = req.params.bugsleft
     if(bugsLeft >= 200){
-        res.redirect('/bugs')
+        res.send('Too many bugs!! Start over!')
     }
     res.send(`${bugsLeft} little bugs in the code`)
 })
@@ -36,6 +36,9 @@ app.get('/pokemon', (req,res) => {
 app.get('/pokemon/search', (req, res) => {
     const name = req.query.name
     const pokemonObj = pokemon.find(pokemon => pokemon.name.toLowerCase() === name.toLowerCase())
+    if(!pokemonObj){
+        res.send([])
+    }
     res.send([pokemonObj])
 })
 app.get('/pokemon/:indexOfArray', (req,res) => {
