@@ -16,23 +16,20 @@ app.get("/:verb/:adjective/:noun", (req, res) => {
 
 //2.
   app.get("/bugs", (req, res) => {
-    res.send("<h1>99 little bugs in the code</h1>");
+    res.send( "<h1>99 little bugs in the code</h1><a href='./bugs/101'> Pull on down, patchit around</a>");
   });
   
   app.get("/bugs/:numberOfBugs", (req, res) => {
-    const numberOfBugs = Number(req.params.numberOfBugs);
-  
+    const numberOfBugs = req.params.numberOfBugs;
+
     if (numberOfBugs >= 200) {
-      // res.redirect("/bugs");
-      res.send("Too many bugs!! Start over!");
-    } else {
-      res.send(`
-          <p>199 little bugs in the code</p>
-          <a href="/${numberOfBugs + 2}">Pull one down, patch it around</a> 
-    `);
+      res.send(`<h1>${numberOfBugs} little bugs in the code</h1><a href="/bugs">Too many bugs!! Start over!</a>`);
+    }else{
+      res.send(
+        `<h1>${numberOfBugs} little bugs in the code</h1><a href="/bugs/${+numberOfBugs + 2}">Pull one down, patch it around</a>`
+      );
     }
   });
-  
 
 //3.
 const pokemon = require("./models/pokemon.json");
