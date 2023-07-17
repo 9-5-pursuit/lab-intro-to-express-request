@@ -1,80 +1,74 @@
 const express = require("express");
 const app = express();
-
+const morgan = require("morgan");
 const pokemon = require("./models/pokemon.json");
-//console.log(pokemon[0]);
 
+app.use(morgan("dev"));
+app.use(express.json());
 
-
-app.get("/", (request, response) => {
-  response.send("Welcome 99 Pokemon");
+app.get("/", (req, res) => {
+  res.send("Welcome 99 Pokemon");
 });
 
-app.get("/:verb/:adjective/:noun", (request, response) => {
-  response.send(
-    `Congratulations on starting a new project called ${request.params.verb}-${request.params.adjective}-${request.params.noun}!`
+app.get("/:verb/:adjective/:noun", (req, res) => {
+  res.send(
+    `Congratulations on starting a new project called ${req.params.verb}-${req.params.adjective}-${req.params.noun}!`
   );
 });
 
 app.get("/bugs", (req, res) => {
-  res.send("<h1>99 little bugs in the code</h1>");
+  res.send(
+    "<h1>99 little bugs in the code</h1> <a href='./bugs/101'>pull one down, patch it around</a>"
+  );
 });
 
-app.get("/bugs/:numberOfBugs", (request, response) => {
-  const numberOfBugs = Number(request.params.numberOfBugs);
 
-  if (numberOfBugs >= 200) {
-    // res.redirect("/bugs");
-    response.send("Too many bugs!! Start over!");
+app.get("/bugs/:numberOfBugs", (req, res) => {
+  const {numberOfBugs} = req.params;
+
+  if (Number(numberOfBugs) >= 200) {
+    res.send(`<a href="/">Too many bugs!! Start over!</a>`);
   } else {
-    response.send(`
-        <p>199 little bugs in the code</p>
-        <a href="/${numberOfBugs + 2}">Pull one down, patch it around</a> 
-  `);
+    res.send(
+      `${Number(numberOfBugs)} little bugs in the code<a href="/bugs/${
+        Number(numberOfBugs) + 2
+      }">Pull one down, patch it around</a>`
+    );
   }
 });
 
+
 app.get("/pokemon", (request, response) => {
-  response.send(pokemon)
+  response.send(pokemon);
 });
 
 app.get("/pokemon/search", (request, response) => {
+  const { name } = request.query;
 
-const {name} = request.query;
+  const poke = pokemon.find((p) => {
+    return p.name.toLowerCase() === name.toLowerCase();
+  });
 
-    const poke = pokemon.find((p) =>  {return p.name.toLowerCase() === name.toLowerCase()})
-
-    if (poke) {
-        response.send( [poke] );
-    }
-    else {
-        response.send( [] );
-    }
-    
-});
-
-app.get("/pokemon/:indexOfArray", (request, response) => {
-  const { indexOfArray } = request.params;
-  const poke = pokemon[indexOfArray];
-  if (poke) {
-    response.send(pokemon[indexOfArray]);
+  if (!poke) {
+    response.send([]);
   } else {
-    response.send(`Sorry, no pokemon found at ${indexOfArray}`);
+    response.send([poke]);
   }
 });
 
-app.get("/pokemon/:indexOfArray", (req, res) => {
-  let indexOfArray = Number(req.params.indexOfArray);
+app.get("/pokemon/:index", (request, response) => {
+  const indexOf = Number(request.params.index);
 
-  let selectedPokemon = pokemon[indexOfArray];
+  const pokemonIndex = pokemon.find((item, index) => {
+    return indexOf === index;
+  });
 
-  if (!selectedPokemon) {
-    res.send(`Sorry, no pokemon found at ${indexOfArray}`);
-  } else {
-    res.send(selectedPokemon);
-  }
+ if (!pokemonIndex) {
+   response.send(`Sorry, no pokemon found at ${indexOf}`);
+ } else {
+   response.send(pokemonIndex);
+ }
+
 });
 
-
-
-module.exports = app;
+module.exports = app;99

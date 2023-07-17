@@ -5,7 +5,7 @@
     "morgan": "^1.10.0"
   },
   "scripts": {
-    "start": "node server.js",
+    "start": "nodemon server.js",
     "test": "jest"
   },
   "name": "99-pokemon-express",
